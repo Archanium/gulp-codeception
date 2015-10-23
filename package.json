@@ -1,6 +1,6 @@
 {
-  "name": "gulp-codeception",
-  "version": "0.5.0",
+  "name": "gulp-codeception-archan",
+  "version": "0.0.1",
   "description": "PHP Codeception plugin for Gulp",
   "main": "index.js",
   "dependencies": {
@@ -20,21 +20,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikeerickson/gulp-codeception"
+    "url": "git://github.com/archanium/gulp-codeception"
   },
   "keywords": [
     "gulpplugin",
     "codeception"
   ],
-  "author": "Mike Erickson <codedungeon@gmail.com>",
+  "author": ["Mike Erickson <codedungeon@gmail.com>", "Thomas faurbye Nielsen <archanium@gmail.com>"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mikeerickson/gulp-codeception/issues"
+    "url": "https://github.com/archanium/gulp-codeception/issues"
   },
   "engines": {
     "node": ">=0.10.0"
   },
-  "homepage": "https://github.com/mikeerickson/gulp-codeception",
+  "homepage": "https://github.com/archanium/gulp-codeception",
   "directories": {
     "test": "test"
   }
