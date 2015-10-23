@@ -6,9 +6,8 @@ var map = require('map-stream'),
 	gutil = require('gulp-util'),
 	os    = require('os'),
 	exec  = require('child_process').exec;
-
+var counter = 0;
 module.exports = function(command, opt) {
-	var counter = 0;
 	var skipCmd = '';
 
 	if (typeof command === 'object') {
@@ -61,46 +60,49 @@ module.exports = function(command, opt) {
 			}
 		}
 
-		if(counter === 0) {
-			counter++;
+		var runCodeception = function () {
+			if(counter === 0) {
+				counter++;
 
-			// attach any flags
-			if (opt.debug && ! opt.build) {
-				opt.flags += ' --debug ';
-			}
-			cmd += skipCmd + ' ' + opt.flags;
+				// attach any flags
+				if (opt.debug && ! opt.build) {
+					opt.flags += ' --debug ';
+				}
+				cmd += skipCmd + ' ' + opt.flags;
 
-			cmd.trim(); // clean up any space remnants
+				cmd.trim(); // clean up any space remnants
 
-			if (opt.debug) {
-				gutil.log(gutil.colors.yellow('\n       *** Debug Cmd: ' + cmd + '***\n'));
-			}
-
-			exec(cmd, function (error, stdout, stderr) {
-
-				if (!opt.silent && stderr) {
-					gutil.log(stderr);
+				if (opt.debug) {
+					gutil.log(gutil.colors.yellow('\n       *** Debug Cmd: ' + cmd + '***\n'));
 				}
 
-				if (stdout) {
-					stdout = stdout.trim(); // Trim trailing cr-lf
-				}
+				exec(cmd, function (error, stdout, stderr) {
+					counter--;
+					if (!opt.silent && stderr) {
+						gutil.log(stderr);
+					}
 
-				if (!opt.silent && stdout) {
-					gutil.log(stdout);
-				}
+					if (stdout) {
+						stdout = stdout.trim(); // Trim trailing cr-lf
+					}
 
-				if(opt.debug && error) {
-					gutil.log(error);
-				}
+					if (!opt.silent && stdout) {
+						gutil.log(stdout);
+					}
 
-				if (opt.notify) {
-					cb(error, file);
-				} else {
-					cb(null, file);
-				}
+					if (opt.debug && error) {
+						gutil.log(error);
+					}
 
-			});
+					if (opt.notify) {
+						cb(error, file);
+					} else {
+						cb(null, file);
+					}
+				});
+		} else {
+			gutil.log("Waiting on previous codeception run.");
+            setTimeout(runCommand, 500);
 		}
 	});
 
