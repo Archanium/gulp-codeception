@@ -102,7 +102,7 @@ module.exports = function(command, opt) {
 				});
 		} else {
 			gutil.log("Waiting on previous codeception run.");
-            setTimeout(runCommand, 500);
+            		setTimeout(runCommand, 500);
 		}
 	});
 
